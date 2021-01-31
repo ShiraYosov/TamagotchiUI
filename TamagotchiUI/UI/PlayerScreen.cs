@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using System.Threading.Tasks;
+using TamagotchiUI.DTO;
 
 namespace Tamagotchi.UI
 {
@@ -34,19 +36,20 @@ namespace Tamagotchi.UI
                     {
                         Console.WriteLine();
                         //Show all player's pets details(alive and dead)
-                        List<Object> animals = (from animalList in UIMain.CurrentPlayer.Pets
+                        Task<List<PetDTO>> tt = UIMain.api.AnimalList();
+                        tt.Wait();
+                        List<PetDTO> lst = tt.Result;
+                        List<Object> animals = (from animalList in lst
                                                 select new
                                                 {
                                                     ID = animalList.PetId,
                                                     Name = animalList.PetName,
                                                     BirthDate = animalList.BirthDate,
-                                                    Status = $"{animalList.GetStatus(UIMain.)}"
+                                                    Status = animalList.StatusId
                                                 }).ToList<Object>();
                         ObjectsList list = new ObjectsList("Animals", animals);
                         list.Show();
                         Console.WriteLine();
-
-
                     }
                     //Showing screen according to the pressed key
 
@@ -54,7 +57,6 @@ namespace Tamagotchi.UI
                     {
                         ChangeDetails change = new ChangeDetails();
                         change.Show();
-
                     }
                     c = Console.ReadKey().KeyChar;
                 }

@@ -52,7 +52,7 @@ namespace TamagotchiUI.WebServices
             }
         }
 
-        public async Task<List<PetDTO>> AnimalList(PlayerDTO p)
+        public async Task<List<PetDTO>> AnimalList()
         {
             try
             {
