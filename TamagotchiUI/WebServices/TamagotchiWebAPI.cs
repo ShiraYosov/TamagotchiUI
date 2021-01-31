@@ -51,5 +51,8 @@ namespace TamagotchiUI.WebServices
                 return null;
             }
         }
-    }
+
+        public async void ChangePass(PlayerDTO p, string n)
+        {
+        }
 }
