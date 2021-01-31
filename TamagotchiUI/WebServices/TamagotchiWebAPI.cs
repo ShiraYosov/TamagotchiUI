@@ -51,5 +51,32 @@ namespace TamagotchiUI.WebServices
                 return null;
             }
         }
+
+        public async Task<List<PetDTO>> AnimalList(PlayerDTO p)
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.url}/GetAnimalList");
+                if (response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string content = await response.Content.ReadAsStringAsync();
+                    List<PetDTO> list = JsonSerializer.Deserialize<List<PetDTO>>(content, options);
+                    return list;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
     }
 }
