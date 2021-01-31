@@ -17,6 +17,8 @@ namespace TamagotchiUI.DTO
         public DateTime BirthDate { get; set; }
         
         public int PetId { get; set; }
+        public virtual PetDTO Pet { get; set; }
+        public virtual ICollection<PetDTO> Pets { get; set; }
 
         public PlayerDTO() { }
     }
