@@ -51,5 +51,7 @@ namespace TamagotchiUI.WebServices
                 return null;
             }
         }
+
+        public async Task<PetDTO> Clean()
     }
 }
