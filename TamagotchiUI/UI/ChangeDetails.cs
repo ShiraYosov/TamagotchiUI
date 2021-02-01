@@ -40,7 +40,7 @@ namespace Tamagotchi.UI
                     //Changing password
                     string newPswd = Console.ReadLine();
                     if (newPswd != "")
-                        UIMain.api.ChangePass(CurrentPlayer, newPswd);
+                        UIMain.api.ChangePass(newPswd);
                     else
                         Console.WriteLine("Password not changed! new value was not written");
                     Console.ReadKey();
@@ -62,7 +62,7 @@ namespace Tamagotchi.UI
                     //Changing username
                     string newName = Console.ReadLine();
                     if (newName != "")
-                       .ChangeUserName(CurrentPlayer, newName);
+                       UIMain.api.ChangeUserName(newName);
                     else
                         Console.WriteLine("Username not changed! new value was not written");
                     Console.ReadKey();
@@ -85,7 +85,7 @@ namespace Tamagotchi.UI
                     //Changing mail
                     string newMail = Console.ReadLine();
                     if (newMail != "")
-                        bl.ChangeEmail(CurrentPlayer, newMail);
+                        UIMain.api.ChangeEmail(newMail);
                     else
                         Console.WriteLine("Mail not changed! new value was not written");
                     Console.ReadKey();
