@@ -12,6 +12,7 @@ namespace Tamagotchi.UI
         public static PlayerDTO CurrentPlayer { get; set; }
         //public static Pet CurrentPet { get; set; }
         public static TamagotchiWebAPI api { get; private set; }
+        public static FoodDTO food { get; set; }
 
         private Screen initialScreen;
         public UIMain(Screen initial)
