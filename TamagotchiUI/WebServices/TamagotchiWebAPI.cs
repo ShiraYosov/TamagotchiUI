@@ -55,4 +55,27 @@ namespace TamagotchiUI.WebServices
         public async void ChangePass(PlayerDTO p, string n)
         {
         }
+
+        public async Task<List<F> PrintFood()
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.url}/Feed");
+                if (response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string content = await response.Content.ReadAsStringAsync();
+                    PetDTO p = JsonSerializer.Deserialize<PetDTO>(content, options);
+                    
+                }           
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine("Oops, something went wrong. Please try again.");
+            }
+        }
 }
