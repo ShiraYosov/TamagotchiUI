@@ -39,6 +39,7 @@ namespace Tamagotchi.UI
                         Task<List<PetDTO>> tt = UIMain.api.AnimalList();
                         tt.Wait();
                         List<PetDTO> lst = tt.Result;
+
                         List<Object> animals = (from animalList in lst
                                                 select new
                                                 {

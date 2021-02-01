@@ -78,5 +78,32 @@ namespace TamagotchiUI.WebServices
                 return null;
             }
         }
+
+        public async Task<string> GetStatus(int id)
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.url}/GetPetStatus?id={id}");
+                if (response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string content = await response.Content.ReadAsStringAsync();
+                    string status = JsonSerializer.Deserialize<string>(content, options);
+                    return status;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
     }
 }
