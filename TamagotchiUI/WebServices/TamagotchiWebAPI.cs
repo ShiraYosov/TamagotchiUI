@@ -52,7 +52,68 @@ namespace TamagotchiUI.WebServices
             }
         }
 
-        public async void ChangePass(PlayerDTO p, string n)
+        public async void ChangePass(string n)
         {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.url}/ChangePass?pass={n}");
+                if (response.IsSuccessStatusCode)
+                {
+                    return;
+                }
+                else
+                {
+                    throw new Exception("Could not update your password");
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+
+            }
         }
+        public async void ChangeUserName(string n)
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.url}/ChangeUserName?userName={n}");
+                if (response.IsSuccessStatusCode)
+                {
+                    return;
+                }
+                else
+                {
+                    throw new Exception("Could not update your username");
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+
+            }
+        }
+        public async void ChangeEmail(string n)
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.url}/ChangeUserName?email={n}");
+                if (response.IsSuccessStatusCode)
+                {
+                    return;
+                }
+                else
+                {
+                    throw new Exception("Could not update your email");
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+
+            }
+        }
+    }
 }
