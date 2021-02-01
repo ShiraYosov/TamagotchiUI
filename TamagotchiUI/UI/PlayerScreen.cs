@@ -46,7 +46,7 @@ namespace Tamagotchi.UI
                                                     ID = animalList.PetId,
                                                     Name = animalList.PetName,
                                                     BirthDate = animalList.BirthDate,
-                                                    Status = animalList.StatusId
+                                                    Status = animalList.GetStatus()
                                                 }).ToList<Object>();
                         ObjectsList list = new ObjectsList("Animals", animals);
                         list.Show();

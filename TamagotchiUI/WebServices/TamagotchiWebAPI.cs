@@ -105,7 +105,7 @@ namespace TamagotchiUI.WebServices
                 return null;
             }
         }
-    }
+
         public async void ChangePass(string n)
         {
             try
@@ -170,4 +170,6 @@ namespace TamagotchiUI.WebServices
             }
         }
     }
+        
 }
+
