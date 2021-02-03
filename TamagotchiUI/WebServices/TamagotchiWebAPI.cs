@@ -115,5 +115,78 @@ namespace TamagotchiUI.WebServices
 
             }
         }
+
+        public async Task<List<FoodDTO>> PrintFood()
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.url}/PrintFood");
+                if (response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string content = await response.Content.ReadAsStringAsync();
+                    List<FoodDTO> list = JsonSerializer.Deserialize<List<FoodDTO>>(content, options);
+                    return list;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
+        public async string PrintFoodName(int id)
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.url}/PrintFood");
+                if (response.IsSuccessStatusCode)
+                {
+                    return "success";
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
+        public async void Feed(int id)
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.url}/Feed?id={id}");
+                if (response.IsSuccessStatusCode)
+                {
+                    return;
+                }
+                else
+                {
+                    throw new Exception("Could not feed your pet");
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+
+            }
+        }
+
     }
 }
+    
+

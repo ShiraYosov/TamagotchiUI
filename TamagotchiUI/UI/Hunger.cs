@@ -27,17 +27,20 @@ namespace Tamagotchi.UI
             Console.WriteLine($"Pet's hunger level:{UIMain.CurrentPlayer.Pet.HungerId}");
             Console.WriteLine("\n");
 
+            Task<List<FoodDTO>> t = UIMain.api.PrintFood();
+            t.Wait();
+            List<FoodDTO> p = t.Result;
             //Print a table that contains the details we need to feed the pet
-            List<Object> food = (from foodList in UIMain.db.Foods
+            List<object> food = (from foodList in p
                                  select new
                                  {
                                      ID = foodList.FoodId,
-                                     Name = foodList.FoodNavigation.ActivityName,
+                                     Name = foodList.ActivityName,
                                      SatiatyLevel = foodList.SatiatyLevel,
                                      Calories = foodList.Calories,
-                                     //cleanAdd = UIMain.db.Activities.Where(p => p.ActivityId == foodList.FoodId).Select(p1 => p1.CleanAdd),
-                                     //joyAdd = UIMain.db.Activities.Where(p => p.ActivityId == foodList.FoodId).Select(p1 => p1.JoyAdd)
-                                 }).ToList<Object>();
+                                     cleanAdd = foodList.CleanAdd,
+                                     joyAdd = foodList.JoyAdd
+                                 }).ToList<Object>();          
             ObjectsList list = new ObjectsList("Feeding Options", food);
             list.Show();
             Console.WriteLine(" ");
@@ -56,18 +59,24 @@ namespace Tamagotchi.UI
                 }
 
                 //Feed the pet and add to pet's level
-                Food f = UIMain.db.Foods.Where(n => n.FoodId == foodNumber).FirstOrDefault();
-                UIMain.CurrentPlayer.Pet.Feed(f, UIMain.db);
+                UIMain.api.Feed(foodNumber);
+                //Food f = UIMain.db.Foods.Where(n => n.FoodId == foodNumber).FirstOrDefault();
+                //UIMain.CurrentPlayer.Pet.Feed(f, UIMain.db);
                 Console.WriteLine("");
 
                 //Return to previous screen
                 Console.WriteLine("\nPlease enter any key to go back");
                 char ch = Console.ReadKey().KeyChar;
-                if (ch != null)
+                if(ch != null)
                 {
-                    AnimalMeasures c = new AnimalMeasures();
-                    c.Show();
+                    MainMenu m = new MainMenu();
+                    m.Show();
                 }
+                //if (ch != null)
+                //{
+                //    AnimalMeasures c = new AnimalMeasures();
+                //    c.Show();
+                //}
 
             }
 
