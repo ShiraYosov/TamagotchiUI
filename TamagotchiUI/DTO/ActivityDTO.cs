@@ -6,6 +6,7 @@ namespace TamagotchiUI.DTO
 {
     class ActivityDTO
     {
+        public ActivityDTO() { }
         public int ActivityId { get; set; }
         public string ActivityName { get; set; }
         public int? JoyAdd { get; set; }

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using TamagotchiUI.WebServices;
+using Tamagotchi.UI;
+using System.Threading.Tasks;
 
 namespace TamagotchiUI.DTO
 {
@@ -18,6 +20,13 @@ namespace TamagotchiUI.DTO
         public DateTime? BirthDate { get; set; }
         public double? PetAge { get; set; }
         public double? PetWeight { get; set; }
+
+        public string GetStatus()
+        {
+            Task<string> t = UIMain.api.GetStatus((int)this.StatusId);
+            t.Wait();
+            return t.Result;
+        }
 
         //    public virtual Clean Clean { get; set; }
         //    public virtual Hunger Hunger { get; set; }

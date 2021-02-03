@@ -52,6 +52,60 @@ namespace TamagotchiUI.WebServices
             }
         }
 
+        public async Task<List<PetDTO>> AnimalList()
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.url}/GetAnimalList");
+                if (response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string content = await response.Content.ReadAsStringAsync();
+                    List<PetDTO> list = JsonSerializer.Deserialize<List<PetDTO>>(content, options);
+                    return list;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
+        public async Task<string> GetStatus(int id)
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.url}/GetPetStatus?id={id}");
+                if (response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string content = await response.Content.ReadAsStringAsync();
+                    string status = JsonSerializer.Deserialize<string>(content, options);
+                    return status;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
         public async void ChangePass(string n)
         {
             try
