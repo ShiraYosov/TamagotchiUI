@@ -18,7 +18,7 @@ namespace Tamagotchi.UI
             this.AddItem("profile", new PlayerScreen());
             this.AddItem("Feed", new Hunger());
             this.AddItem("Clean", new Clean());
-            this.AddItem("Change datails", new ChangeDetails());
+            this.AddItem("Change details", new ChangeDetails());
             
 
 

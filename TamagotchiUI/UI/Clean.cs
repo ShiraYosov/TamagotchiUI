@@ -13,6 +13,7 @@ namespace Tamagotchi.UI
     {
         const int FIRSTCLEAN = 6;
         const int LASTCLEAN = 11;
+        const int DEAD = 1;
         public Clean() : base("Clean Pet")
         {
 
@@ -67,7 +68,17 @@ namespace Tamagotchi.UI
                     Task<string> a = UIMain.api.UpdateClean(cleanNumber);
                     a.Wait();
                     Console.WriteLine($"{a.Result}\n");
-                    
+
+                    Task<PlayerDTO> player = UIMain.api.GetPlayer();
+                    player.Wait();
+                    UIMain.CurrentPlayer = player.Result;
+
+                    IEnumerable<PetDTO> petList = from p in UIMain.CurrentPlayer.Pets where (p.StatusId != DEAD) select p;
+                    UIMain.CurrentPet = petList.FirstOrDefault();
+
+                    Console.WriteLine("\nWould you like to clean your pet again? (please enter yes/no)");
+                    answer = Console.ReadLine();
+
                 }
                 
 

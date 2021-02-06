@@ -286,6 +286,33 @@ namespace TamagotchiUI.WebServices
             }
         }
 
+        public async Task<PlayerDTO> GetPlayer()
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.url}/GetPlayer");
+                if (response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string content = await response.Content.ReadAsStringAsync();
+                    PlayerDTO p = JsonSerializer.Deserialize<PlayerDTO>(content, options);
+                    return p;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
         public async Task<List<ActivityDTO>> CleanlList()
         {
             try

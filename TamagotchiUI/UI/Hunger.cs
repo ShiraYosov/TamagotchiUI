@@ -14,6 +14,7 @@ namespace Tamagotchi.UI
     {
         const int FIRSTFOOD = 12;
         const int LASTFOOD = 24;
+        const int DEAD = 1;
         public Hunger() : base("Feed Pet")
         {
 
@@ -65,6 +66,14 @@ namespace Tamagotchi.UI
                     Task<string> a = UIMain.api.Feed(foodNumber);
                     a.Wait();
                     Console.WriteLine($"{a.Result}\n");
+
+                    Task<PlayerDTO> player = UIMain.api.GetPlayer();
+                    player.Wait();
+                    UIMain.CurrentPlayer = player.Result;
+
+                    IEnumerable<PetDTO> petList = from pet in UIMain.CurrentPlayer.Pets where (pet.StatusId != DEAD) select pet;
+                    UIMain.CurrentPet = petList.FirstOrDefault();
+
                     Console.WriteLine("\nWould you like to feed your pet again? (please enter yes/no)");
                     answer = Console.ReadLine();
                 }

@@ -44,6 +44,9 @@ namespace Tamagotchi.UI
                        Task<string> t = UIMain.api.ChangePass(newPswd);
                         t.Wait();
                         Console.WriteLine(t.Result);
+                        Task<PlayerDTO> player = UIMain.api.GetPlayer();
+                        player.Wait();
+                        UIMain.CurrentPlayer = player.Result;
                     }
                     else
                         Console.WriteLine("Password not changed! new value was not written");
@@ -70,6 +73,9 @@ namespace Tamagotchi.UI
                         Task<string> a = UIMain.api.ChangeUserName(newName);
                         a.Wait();
                         Console.WriteLine(a.Result);
+                        Task<PlayerDTO> player = UIMain.api.GetPlayer();
+                        player.Wait();
+                        UIMain.CurrentPlayer = player.Result;
                     }
                       
                     else
@@ -98,6 +104,9 @@ namespace Tamagotchi.UI
                         Task<string> f = UIMain.api.ChangeEmail(newMail);
                         f.Wait();
                         Console.WriteLine(f.Result);
+                        Task<PlayerDTO> player = UIMain.api.GetPlayer();
+                        player.Wait();
+                        UIMain.CurrentPlayer = player.Result;
                     }
                       
                     else
