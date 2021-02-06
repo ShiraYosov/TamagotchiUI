@@ -28,14 +28,37 @@ namespace TamagotchiUI.DTO
             return t.Result;
         }
 
+        public PetDTO() { }
+
+        public string GetCleanLevel()
+        {
+            Task<string> t = UIMain.api.GetCleanLevel((int)this.CleanId);
+            t.Wait();
+            return t.Result;
+        }
+
+        public string GetJoyLevel()
+        {
+            Task<string> t = UIMain.api.GetJoyLevel((int)this.JoyId);
+            t.Wait();
+            return t.Result;
+        }
+
+        public string GetHungerLevel()
+        {
+            Task<string> t = UIMain.api.GetHungerLevel((int)this.HungerId);
+            t.Wait();
+            return t.Result;
+        }
+
         //    public virtual Clean Clean { get; set; }
         //    public virtual Hunger Hunger { get; set; }
         //    public virtual Joy Joy { get; set; }
         //    public virtual LifeCircle LifeTime { get; set; }
-        //    public virtual Player Player { get; set; }
+        //    public virtual PlayerDTO Player { get; set; }
         //    public virtual PetStatus Status { get; set; }
         //    public virtual ICollection<PetActivity> PetActivities { get; set; }
-        //    public virtual ICollection<Player> Players { get; set; }
+        //    public virtual ICollection<PlayerDTO> Players { get; set; }
         //}
     }
 }

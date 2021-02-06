@@ -6,6 +6,7 @@ using Microsoft.VisualBasic.CompilerServices;
 using TamagotchiUI.WebServices;
 using System.Threading.Tasks;
 using TamagotchiUI.DTO;
+using Tamagotchi.UI;
 
 namespace Tamagotchi.UI
 {
@@ -13,11 +14,14 @@ namespace Tamagotchi.UI
     {
         public MainMenu() : base($"Main Menu - {UIMain.CurrentPlayer.UserName} is logged in")
         {
-            //Build items in main menu!
-            //AddItem("Profile", new PlayerScreen());
-            //AddItem("Last Actions", new LastActions());
-            //AddItem("Current Animal Measures", new AnimalMeasures());
-           
+            //build items in main menu!
+            this.AddItem("profile", new PlayerScreen());
+            this.AddItem("Feed", new Hunger());
+            this.AddItem("Clean", new Clean());
+            this.AddItem("Change datails", new ChangeDetails());
+            
+
+
 
         }
     }

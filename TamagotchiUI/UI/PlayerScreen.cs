@@ -35,7 +35,7 @@ namespace Tamagotchi.UI
                     if (c == 'a' || c == 'A')
                     {
                         Console.WriteLine();
-                        //Show all player's pets details(alive and dead)
+                        //Show all player's pets details(alive and dead)1
                         Task<List<PetDTO>> tt = UIMain.api.AnimalList();
                         tt.Wait();
                         List<PetDTO> lst = tt.Result;

@@ -86,13 +86,8 @@ namespace TamagotchiUI.WebServices
                 HttpResponseMessage response = await this.client.GetAsync($"{this.url}/GetPetStatus?id={id}");
                 if (response.IsSuccessStatusCode)
                 {
-                    JsonSerializerOptions options = new JsonSerializerOptions
-                    {
-                        PropertyNameCaseInsensitive = true
-                    };
-                    string content = await response.Content.ReadAsStringAsync();
-                    string status = JsonSerializer.Deserialize<string>(content, options);
-                    return status;
+                   string content = await response.Content.ReadAsStringAsync();
+                    return content;
                 }
                 else
                 {
@@ -106,56 +101,124 @@ namespace TamagotchiUI.WebServices
             }
         }
 
-        public async void ChangePass(string n)
+        public async Task<string> GetCleanLevel(int id)
         {
             try
             {
-                HttpResponseMessage response = await this.client.GetAsync($"{this.url}/ChangePass?pass={n}");
+                HttpResponseMessage response = await this.client.GetAsync($"{this.url}/GetCleanLevel?id={id}");
                 if (response.IsSuccessStatusCode)
                 {
-                    return;
+                    string content = await response.Content.ReadAsStringAsync();
+                    return content;
                 }
                 else
                 {
-                    throw new Exception("Could not update your password");
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
+        public async Task<string> GetJoyLevel(int id)
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.url}/GetJoyLevel?id={id}");
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    return content;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
+        public async Task<string> GetHungerLevel(int id)
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.url}/GetHungerLevel?id={id}");
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    return content;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
+        public async Task<string> ChangePass(string n)
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.url}/ChangePass?newVal={n}");
+                if (response.IsSuccessStatusCode)
+                {
+                    return"Password changed successfully! Press any key to go back"; 
+                }
+                else
+                {
+
+                    return "Could not update your password";
                 }
 
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-
+                return "Could not update your password";
             }
         }
-        public async void ChangeUserName(string n)
+        public async Task<string> ChangeUserName(string n)
         {
             try
             {
-                HttpResponseMessage response = await this.client.GetAsync($"{this.url}/ChangeUserName?userName={n}");
+                HttpResponseMessage response = await this.client.GetAsync($"{this.url}/ChangeUserName?newVal={n}");
                 if (response.IsSuccessStatusCode)
                 {
-                    return;
+                    return"Password changed successfully! Press any key to go back";
                 }
                 else
                 {
-                    throw new Exception("Could not update your username");
+                    return "Could not update your username";
                 }
 
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                return "Could not update your username";
 
             }
         }
-        public async void ChangeEmail(string n)
+        public async Task<string> ChangeEmail(string n)
         {
             try
             {
-                HttpResponseMessage response = await this.client.GetAsync($"{this.url}/ChangeUserName?email={n}");
+                HttpResponseMessage response = await this.client.GetAsync($"{this.url}/ChangeUserName?newVal={n}");
                 if (response.IsSuccessStatusCode)
                 {
-                    return;
+                    return "Could not update your email";
                 }
                 else
                 {
@@ -166,6 +229,7 @@ namespace TamagotchiUI.WebServices
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                return "Could not update your email";
 
             }
         }
@@ -197,14 +261,45 @@ namespace TamagotchiUI.WebServices
             }
         }
 
-        public async string PrintFoodName(int id)
+
+       
+        public async Task<string> Feed(int id)
         {
             try
             {
-                HttpResponseMessage response = await this.client.GetAsync($"{this.url}/PrintFood");
+                HttpResponseMessage response = await this.client.GetAsync($"{this.url}/Feed?id={id}");
                 if (response.IsSuccessStatusCode)
                 {
-                    return "success";
+                    return "Yummy! Feeding was completed successfully";
+                }
+                else
+                {
+                    throw new Exception("Could not feed your pet");
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return "Could not feed your pet";
+
+            }
+        }
+
+        public async Task<List<ActivityDTO>> CleanlList()
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.url}/GetCleanList");
+                if (response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string content = await response.Content.ReadAsStringAsync();
+                    List<ActivityDTO> list = JsonSerializer.Deserialize<List<ActivityDTO>>(content, options);
+                    return list;
                 }
                 else
                 {
@@ -218,24 +313,26 @@ namespace TamagotchiUI.WebServices
             }
         }
 
-        public async void Feed(int id)
+        public async Task<string> UpdateClean(int cleanId)
         {
+
             try
             {
-                HttpResponseMessage response = await this.client.GetAsync($"{this.url}/Feed?id={id}");
+                HttpResponseMessage response = await this.client.GetAsync($"{this.url}/UpdateCleanLevel?cleanId={cleanId}");
                 if (response.IsSuccessStatusCode)
                 {
-                    return;
+                    return "Thanks for cleaning me! Cleaning was completed successfully";
                 }
                 else
                 {
-                    throw new Exception("Could not feed your pet");
+                    throw new Exception("Could not clean your pet");
                 }
 
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                return "Could not clean your pet";
 
             }
         }

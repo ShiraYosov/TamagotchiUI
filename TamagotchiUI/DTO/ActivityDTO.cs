@@ -12,7 +12,10 @@ namespace TamagotchiUI.DTO
         public int? JoyAdd { get; set; }
         public int? CleanAdd { get; set; }
 
-        //public virtual FoodDTO Food { get; set; }
-       
+
+
+
+
+
     }
 }

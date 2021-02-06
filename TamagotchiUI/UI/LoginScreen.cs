@@ -9,7 +9,7 @@ using TamagotchiUI.DTO;
 
 namespace Tamagotchi.UI
 {
-    class LoginScreen: Screen
+    class LoginScreen : Screen
     {
         const int DEAD = 1;
         public LoginScreen() : base("Login")
@@ -32,7 +32,7 @@ namespace Tamagotchi.UI
                     if (c == 'L' || c == 'l')
                     {
                         //Save all changes to DB before logging out
-                        
+
                         UIMain.CurrentPlayer = null;
                     }
                 }
@@ -48,31 +48,24 @@ namespace Tamagotchi.UI
                     Console.WriteLine($"Please enter your password: ");
                     string password = Console.ReadLine();
 
-                    Task<PlayerDTO> tt = UIMain.api.Login(uName,password);
+                    Task<PlayerDTO> tt = UIMain.api.Login(uName, password);
                     tt.Wait();
                     UIMain.CurrentPlayer = tt.Result;
-                   
-                    if (UIMain.CurrentPlayer != null)
-                    {
-                        Console.WriteLine("Login was done successfully!");
-                    }
-                    else
+
+                    if (UIMain.CurrentPlayer == null)
                     {
                         Console.WriteLine("Could not login!!! Please fix it and run again!");
                         Environment.Exit(0);
                     }
-
-                   
-                    //else
-                    //{
-                    //    IEnumerable<Pet> petList = from p in UIMain.CurrentPlayer.Pets where (p.StatusId != DEAD) select p;
-                    //    UIMain.CurrentPet = petList.FirstOrDefault();
-                    //}
-
+                    else
+                    {
+                        IEnumerable<PetDTO> petList = from p in UIMain.CurrentPlayer.Pets where (p.StatusId != DEAD) select p;
+                        UIMain.CurrentPet = petList.FirstOrDefault();
+                    }
                 }
                 //Show main menu once user is logged in
-                //MainMenu menu = new MainMenu();
-                //menu.Show();
+                MainMenu menu = new MainMenu();
+                menu.Show();
             }
             catch (Exception e)
             {
