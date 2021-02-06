@@ -24,8 +24,11 @@ namespace Tamagotchi.UI
         {
             base.Show();
 
-            //Print pet's levels
-            Console.WriteLine($"Pet's hunger level:{UIMain.CurrentPet.GetHungerLevel()}");
+            try
+            {
+
+                //Print pet's levels
+                Console.WriteLine($"Pet's hunger level:{UIMain.CurrentPet.GetHungerLevel()}");
             Console.WriteLine("\n");
 
             Task<List<FoodDTO>> t = UIMain.api.PrintFood();
@@ -50,8 +53,7 @@ namespace Tamagotchi.UI
             Console.WriteLine("\nWould you like to feed your pet? (please enter yes/no)");
             string answer = Console.ReadLine();
 
-            try
-            {
+           
 
                 while (answer == "yes")
                 {
@@ -79,13 +81,10 @@ namespace Tamagotchi.UI
                 }
 
                 //Return to previous screen
-                Console.WriteLine("\nPlease enter any key to go back");
-                char ch = Console.ReadKey().KeyChar;
-                if (ch != null)
-                {
+               
                     MainMenu m = new MainMenu();
                     m.Show();
-                }
+                
 
             }
 

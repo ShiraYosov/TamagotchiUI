@@ -21,14 +21,14 @@ namespace TamagotchiUI.DTO
         public double? PetAge { get; set; }
         public double? PetWeight { get; set; }
 
+        public PetDTO() { }
+
         public string GetStatus()
         {
             Task<string> t = UIMain.api.GetStatus((int)this.StatusId);
             t.Wait();
             return t.Result;
         }
-
-        public PetDTO() { }
 
         public string GetCleanLevel()
         {
@@ -51,14 +51,6 @@ namespace TamagotchiUI.DTO
             return t.Result;
         }
 
-        //    public virtual Clean Clean { get; set; }
-        //    public virtual Hunger Hunger { get; set; }
-        //    public virtual Joy Joy { get; set; }
-        //    public virtual LifeCircle LifeTime { get; set; }
-        //    public virtual PlayerDTO Player { get; set; }
-        //    public virtual PetStatus Status { get; set; }
-        //    public virtual ICollection<PetActivity> PetActivities { get; set; }
-        //    public virtual ICollection<PlayerDTO> Players { get; set; }
-        //}
+
     }
 }

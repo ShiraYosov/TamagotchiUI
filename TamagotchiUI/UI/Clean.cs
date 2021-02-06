@@ -23,36 +23,38 @@ namespace Tamagotchi.UI
         {
             base.Show();
 
-            //Print pet's levels
-            Console.WriteLine($"Pet's clean level:{UIMain.CurrentPet.GetCleanLevel()}"); /////////////////
-            Console.WriteLine($"Pet's joy level:{UIMain.CurrentPet.GetJoyLevel()}"); //////////////
-            Console.WriteLine("\n");
-
-            Task<List<ActivityDTO>> t = UIMain.api.CleanlList();
-            t.Wait();
-
-            List<ActivityDTO> list = t.Result;
-            //Print a table that contains the details we need to clean the pet
-            List<Object> clean = (from cleanList in list
-                                  where (cleanList.ActivityId >= 6 && cleanList.ActivityId <= 11)
-                                  select new
-                                  {
-                                      ID = cleanList.ActivityId,
-                                      Name = cleanList.ActivityName,
-                                      CleanAdd = cleanList.CleanAdd,
-                                      JoyAdd = cleanList.JoyAdd
-                                  }).ToList<Object>();
-            ObjectsList Cleanlist = new ObjectsList("Cleaning Options", clean);
-            Cleanlist.Show();
-            Console.WriteLine(" ");
-
-            //Input activity id from the user
-            Console.WriteLine("\nWould you like to clean your pet? (please enter yes/no)");
-            string answer = Console.ReadLine();
-
             try
             {
-                while(answer == "yes")
+
+                //Print pet's levels
+                Console.WriteLine($"Pet's clean level:{UIMain.CurrentPet.GetCleanLevel()}");
+                Console.WriteLine($"Pet's joy level:{UIMain.CurrentPet.GetJoyLevel()}");
+                Console.WriteLine("\n");
+
+                Task<List<ActivityDTO>> t = UIMain.api.CleanlList();
+                t.Wait();
+
+                List<ActivityDTO> list = t.Result;
+                //Print a table that contains the details we need to clean the pet
+                List<Object> clean = (from cleanList in list
+                                      where (cleanList.ActivityId >= 6 && cleanList.ActivityId <= 11)
+                                      select new
+                                      {
+                                          ID = cleanList.ActivityId,
+                                          Name = cleanList.ActivityName,
+                                          CleanAdd = cleanList.CleanAdd,
+                                          JoyAdd = cleanList.JoyAdd
+                                      }).ToList<Object>();
+                ObjectsList Cleanlist = new ObjectsList("Cleaning Options", clean);
+                Cleanlist.Show();
+                Console.WriteLine(" ");
+
+                //Input activity id from the user
+                Console.WriteLine("\nWould you like to clean your pet? (please enter yes/no)");
+                string answer = Console.ReadLine();
+
+
+                while (answer == "yes")
                 {
                     Console.WriteLine("\nHow would you like to clean your pet? (please enter clean ID)");
                     int cleanNumber = int.Parse(Console.ReadLine());
@@ -64,7 +66,7 @@ namespace Tamagotchi.UI
                     }
 
                     //Clean the pet and add to pet's level
-                    
+
                     Task<string> a = UIMain.api.UpdateClean(cleanNumber);
                     a.Wait();
                     Console.WriteLine($"{a.Result}\n");
@@ -80,16 +82,13 @@ namespace Tamagotchi.UI
                     answer = Console.ReadLine();
 
                 }
-                
+
 
                 //Return to previous screen
-                Console.WriteLine("\nPlease enter any key to go back");
-                char ch = Console.ReadKey().KeyChar;
-                if (ch != null)
-                {
+             
                     MainMenu m = new MainMenu();
                     m.Show();
-                }
+                
             }
 
             catch (Exception e)
