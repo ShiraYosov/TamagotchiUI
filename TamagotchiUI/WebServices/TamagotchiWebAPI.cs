@@ -196,7 +196,7 @@ namespace TamagotchiUI.WebServices
                 HttpResponseMessage response = await this.client.GetAsync($"{this.url}/ChangeUserName?newVal={n}");
                 if (response.IsSuccessStatusCode)
                 {
-                    return"Password changed successfully! Press any key to go back";
+                    return"Username changed successfully! Press any key to go back";
                 }
                 else
                 {
@@ -215,10 +215,10 @@ namespace TamagotchiUI.WebServices
         {
             try
             {
-                HttpResponseMessage response = await this.client.GetAsync($"{this.url}/ChangeUserName?newVal={n}");
+                HttpResponseMessage response = await this.client.GetAsync($"{this.url}/ChangeEmail?newVal={n}");
                 if (response.IsSuccessStatusCode)
                 {
-                    return "Could not update your email";
+                    return "Email changed successfully! Press any key to go back";
                 }
                 else
                 {
